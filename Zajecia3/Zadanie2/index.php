@@ -1,25 +1,21 @@
 <?php
 
 
-$text = $_GET["text"];
+$text = $_GET["text"] . PHP_EOL;
 $plik = 'plik.txt';
 
 
-if (is_writable($plik)) {
-    if (!$fd = fopen('./plik.txt', 'wb')) {
-        echo("Nie mogę otworzyć pliku $plik");
-        exit;
-    }
-
+if (!$fd = fopen('./plik.txt', 'a')) {
+    echo("Nie mogę otworzyć pliku $plik");
+} else {
     if (fwrite($fd, $text) === FALSE) {
         echo "Nie można napisać tego w pliku ($plik)";
-        exit;
+    } else {
+        echo "Pomyślnie udało się zapisać tekst w pliku";
     }
-
-    echo "Pomyślnie udało się zapisać tekst w pliku";
-
-    fclose($fd);
-}else {
-    echo "Nie można w pliku $plik napisać tekstu";
 }
+
+
+fclose($fd);
+
 ?>
